@@ -1,26 +1,18 @@
 /* ===== VARIABLES ===== */
 :root {
-  --primary-color: #3498db; /* Blue */
-  --primary-color-dark: #2980b9;
+  --primary-color: #4caf50;
+  --primary-color-dark: #388e3c;
   --secondary-color: #333;
-  --accent-color-1: #e74c3c; /* Red */
-  --accent-color-2: #f39c12; /* Orange */
-  --accent-color-3: #9b59b6; /* Purple */
-  --accent-color-4: #1abc9c; /* Teal */
-  --accent-color-5: #e67e22; /* Dark Orange */
   --text-color: #333;
   --text-color-light: #777;
   --bg-color: #fff;
-  --bg-color-alt: #f5f5f5;
-  --bg-color-dark: #2c3e50;
-  --bg-color-medium: #ecf0f1;
-  --bg-color-light-blue: #e8f4fc;
-  --bg-color-light-purple: #f4ecfc;
+  --bg-color-alt: #f9f9f9;
   --border-color: #eee;
   --container-width-lg: 80%;
   --container-width-md: 90%;
   --transition: all 0.3s ease;
   --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -33,14 +25,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Add padding to account for fixed navbar height */
 }
 
-/* Update body background */
 body {
   font-family: "Poppins", sans-serif;
   line-height: 1.7;
   color: var(--text-color);
-  background-color: var(--bg-color-medium);
+  background-color: var(--bg-color);
 }
 
 ul {
@@ -57,6 +49,10 @@ img {
   display: block;
   width: 100%;
   object-fit: cover;
+  pointer-events: none; /* Prevents drag and most interactions */
+  user-select: none; /* Prevents selection */
+  -webkit-user-drag: none; /* Prevents dragging in webkit browsers */
+  -webkit-touch-callout: none; /* Disables iOS callout when holding tap on images */
 }
 
 .container {
@@ -64,37 +60,9 @@ img {
   margin: 0 auto;
 }
 
-/* Update section backgrounds */
 section {
   padding: 6rem 0;
-  position: relative;
-}
-
-section::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background-size: 100% 100%;
-  z-index: 1;
-}
-
-.about::after {
-  background-image: linear-gradient(to bottom, var(--bg-color) 0%, var(--bg-color-light-blue) 100%);
-}
-
-.skills::after {
-  background-image: linear-gradient(to bottom, var(--bg-color-light-blue) 0%, var(--bg-color-medium) 100%);
-}
-
-.portfolio::after {
-  background-image: linear-gradient(to bottom, var(--bg-color-medium) 0%, var(--bg-color-light-purple) 100%);
-}
-
-.certifications::after {
-  background-image: linear-gradient(to bottom, var(--bg-color-light-purple) 0%, #2c3e50 100%);
+  scroll-margin-top: 80px; /* Ensures sections are properly positioned when scrolled to */
 }
 
 .section-header {
@@ -112,7 +80,7 @@ section::after {
 .section-line {
   width: 70px;
   height: 3px;
-  background: linear-gradient(to right, var(--primary-color), var(--accent-color-3));
+  background-color: var(--primary-color);
   margin: 0.5rem auto 0;
 }
 
@@ -123,6 +91,7 @@ section::after {
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  border: none;
 }
 
 .primary-btn {
@@ -136,22 +105,21 @@ section::after {
 
 .secondary-btn {
   background-color: transparent;
-  border: 2px solid var(--accent-color-1);
-  color: var(--accent-color-1);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
   margin-left: 1rem;
 }
 
 .secondary-btn:hover {
-  background-color: var(--accent-color-1);
+  background-color: var(--primary-color);
   color: white;
 }
 
 .highlight {
-  color: var(--accent-color-1);
+  color: var(--primary-color);
 }
 
 /* ===== HEADER & NAVIGATION ===== */
-/* Update header */
 header {
   position: fixed;
   top: 0;
@@ -164,7 +132,6 @@ header {
 }
 
 header.scrolled {
-  background-color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -176,7 +143,7 @@ nav {
 }
 
 .logo img {
-  width: 170px;
+  width: 60px;
   height: auto;
 }
 
@@ -227,9 +194,6 @@ nav {
   display: flex;
   align-items: center;
   padding-top: 80px;
-  /* background: linear-gradient(135deg, var(--bg-color-dark) 0%, #34495e 100%); */
-  background: linear-gradient(268deg, #6fffcb 0%, #00050a 100%);;
-  color: white;
 }
 
 .hero-content {
@@ -243,26 +207,24 @@ nav {
   font-size: 3.5rem;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: white;
 }
 
 .hero-text h2 {
   font-size: 1.8rem;
+  color: var(--text-color-light);
   margin-bottom: 1.5rem;
-  color: white;
 }
 
 .hero-text p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-color-light);
 }
 
 .hero-btns {
   margin-bottom: 2rem;
 }
 
-/* Update social icons in hero section */
 .social-icons {
   display: flex;
   gap: 1rem;
@@ -275,8 +237,8 @@ nav {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
+  background-color: var(--bg-color-alt);
+  color: var(--text-color);
   transition: var(--transition);
 }
 
@@ -285,42 +247,35 @@ nav {
   color: white;
 }
 
-.social-icons a:nth-child(1):hover {
-  background-color: #333; /* GitHub */
-}
-
-.social-icons a:nth-child(2):hover {
-  background-color: #0077b5; /* LinkedIn */
-}
-
-.social-icons a:nth-child(3):hover {
-  background-color: #1da1f2; /* Twitter */
-}
-
-.social-icons a:nth-child(4):hover {
-  background-color: #e1306c; /* Instagram */
-}
-
 .hero-image {
   position: relative;
 }
 
-.profile-img {
-  border-radius: 50%;
-  box-shadow: var(--box_shadow);
-  position: relative;
-  z-index: 2;
-  /* border: 3px solid var(--primary-color); */
-  border: 3px solid #009eff;
+.profile-img,
+.about-image img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50% !important;
+  box-shadow: var(--box-shadow);
+  border: 3px solid var(--primary-color);
   width: 300px;
   height: 300px;
-  object-fit: cover;
-  margin: 0 auto;
+}
+
+.bg-shape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
 }
 
 /* ===== ABOUT SECTION ===== */
 .about {
-  background-color: var(--bg-color);
+  background-color: var(--bg-color-alt);
 }
 
 .about-content {
@@ -331,13 +286,9 @@ nav {
 }
 
 .about-image img {
-  border-radius: 50%;
+  border-radius: 50%; /* Make about image circular */
   box-shadow: var(--box-shadow);
-  border: 3px solid var(--accent-color-3);
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  margin: 0 auto;
+  border: 3px solid var(--primary-color); /* Add border to about image */
 }
 
 .about-text h3 {
@@ -368,14 +319,6 @@ nav {
 }
 
 /* ===== SKILLS SECTION ===== */
-.skills {
-  background-color: var(--bg-color-light-blue);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-}
-
 .skills-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -414,38 +357,14 @@ nav {
 
 .skill-progress {
   height: 100%;
+  background-color: var(--primary-color);
   border-radius: 10px;
   transition: width 1s ease-in-out;
 }
 
-/* Different colors for different skills */
-.skill-progress.html-css {
-  background: linear-gradient(to right, var(--primary-color), #4dabf7);
-}
-
-.skill-progress.javascript {
-  background: linear-gradient(to right, var(--accent-color-2), #ffca28);
-}
-
-.skill-progress.react {
-  background: linear-gradient(to right, var(--accent-color-3), #b39ddb);
-}
-
-.skill-progress.nodejs {
-  background: linear-gradient(to right, var(--accent-color-4), #80deea);
-}
-
-.skill-progress.express {
-  background: linear-gradient(to right, var(--accent-color-1), #ff8a65);
-}
-
-.skill-progress.mongodb {
-  background: linear-gradient(to right, var(--accent-color-5), #ffb74d);
-}
-
 /* ===== PORTFOLIO SECTION ===== */
 .portfolio {
-  background-color: var(--bg-color-medium);
+  background-color: var(--bg-color-alt);
 }
 
 .portfolio-filter {
@@ -478,20 +397,16 @@ nav {
   gap: 2rem;
 }
 
-/* Update card backgrounds */
 .portfolio-item {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: var(--box-shadow);
   transition: var(--transition);
   position: relative;
-  background-color: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .portfolio-item:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .portfolio-img {
@@ -547,11 +462,7 @@ nav {
 
 /* ===== CERTIFICATIONS SECTION ===== */
 .certifications {
-  background-color: var(--bg-color-light-purple);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
+  background-color: var(--bg-color);
 }
 
 .certification-tabs {
@@ -578,7 +489,7 @@ nav {
 }
 
 .certification-tabs-list button.active {
-  background: linear-gradient(to right, var(--primary-color), var(--accent-color-3));
+  background-color: var(--primary-color);
   color: white;
 }
 
@@ -593,19 +504,17 @@ nav {
   display: grid;
 }
 
-/* Update card backgrounds */
 .certification-card {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: var(--box-shadow);
   transition: var(--transition);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .certification-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .certification-img {
@@ -618,6 +527,7 @@ nav {
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
+  pointer-events: auto; /* Enable pointer events for certificate images */
 }
 
 .certification-card:hover .certification-img img {
@@ -642,17 +552,86 @@ nav {
 
 .certification-date {
   font-size: 0.8rem !important;
-  color: var(--accent-color-3) !important;
+  color: var(--primary-color) !important;
   font-weight: 500;
 }
 
-/* ===== CONTACT SECTION ===== */
-.contact {
-  /* background: linear-gradient(135deg, #2c3e50 0%, #3a506b 100%); */
-  background: linear-gradient(310deg, #111e2b 0%, #13a996 100%);
-  color: white;
+/* ===== CERTIFICATE MODAL ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--modal-overlay);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: var(--bg-color);
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  width: 80%;
+  max-width: 900px;
+  position: relative;
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: var(--text-color-light);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-modal:hover {
+  color: var(--primary-color);
+}
+
+#modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-right: 30px;
+  color: var(--secondary-color);
+}
+
+.modal-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  pointer-events: none;
+}
+
+/* ===== CONTACT SECTION ===== */
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -683,29 +662,15 @@ nav {
   font-size: 1.2rem;
 }
 
-.contact-icon.email-icon {
-  background-color: var(--accent-color-1);
-}
-
-.contact-icon.phone-icon {
-  background-color: var(--accent-color-2);
-}
-
-.contact-icon.website-icon {
-  background-color: var(--accent-color-3);
-}
-
 .contact-details h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: white;
 }
 
 .contact-details p {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-color-light);
 }
 
-/* Update card backgrounds */
 .contact-form {
   background-color: white;
   padding: 2rem;
@@ -759,7 +724,7 @@ footer {
 }
 
 .footer-logo img {
-  width: 170px;
+  width: 50px;
   height: auto;
 }
 
@@ -789,22 +754,6 @@ footer {
   background-color: var(--primary-color);
 }
 
-.footer-social a:nth-child(1):hover {
-  background-color: #333; /* GitHub */
-}
-
-.footer-social a:nth-child(2):hover {
-  background-color: #0077b5; /* LinkedIn */
-}
-
-.footer-social a:nth-child(3):hover {
-  background-color: #1da1f2; /* Twitter */
-}
-
-.footer-social a:nth-child(4):hover {
-  background-color: #e1306c; /* Instagram */
-}
-
 .footer-bottom {
   text-align: center;
   padding-top: 2rem;
@@ -812,14 +761,13 @@ footer {
 }
 
 /* ===== BACK TO TOP BUTTON ===== */
-/* Update back to top button */
 .back-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
   width: 50px;
   height: 50px;
-  background: linear-gradient(to right, var(--primary-color), var(--accent-color-3));
+  background-color: var(--primary-color);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -839,7 +787,7 @@ footer {
 }
 
 .back-to-top:hover {
-  background: linear-gradient(to right, var(--accent-color-3), var(--primary-color));
+  background-color: var(--primary-color-dark);
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -882,9 +830,85 @@ footer {
   .certification-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
+
+  .modal-content {
+    width: 90%;
+    margin: 10% auto;
+  }
+
+  .profile-img,
+  .about-image img {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 @media screen and (max-width: 768px) {
+  section {
+    padding: 4rem 0; /* Reduce padding on mobile */
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem; /* Reduce margin on mobile */
+  }
+
+  .hero {
+    height: auto; /* Allow hero to adjust height on mobile */
+    min-height: 100vh; /* Ensure it takes at least full viewport height */
+    padding-top: 100px; /* Account for fixed navbar */
+    padding-bottom: 2rem; /* Add some bottom padding */
+  }
+
+  /* Hide profile picture in hero section on mobile screens */
+  .hero-image {
+    display: none;
+  }
+
+  /* Make hero text take full width when image is hidden */
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 0; /* Remove gap since there's only one column now */
+  }
+
+  .hero-text {
+    width: 100%; /* Ensure text takes full width */
+    padding: 0; /* Remove any padding */
+    margin: 0 auto; /* Center the content */
+  }
+
+  .profile-img,
+  .about-image img {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem; /* Smaller heading on mobile */
+  }
+
+  .hero-text h2 {
+    font-size: 1.2rem; /* Smaller subheading on mobile */
+  }
+
+  .hero-text p {
+    font-size: 0.9rem; /* Smaller paragraph text on mobile */
+  }
+
+  .certification-tabs-list button {
+    padding: 0.5rem 1rem; /* Smaller padding for tab buttons */
+    font-size: 0.9rem; /* Smaller font for tab buttons */
+    margin-bottom: 0.5rem; /* Add space between buttons when they wrap */
+  }
+
+  .certification-card {
+    margin-bottom: 1.5rem; /* Add space between cards */
+  }
+
+  .certification-img {
+    height: 180px; /* Slightly smaller image height on mobile */
+  }
+
   .nav-menu {
     position: fixed;
     top: 80px;
@@ -903,6 +927,9 @@ footer {
 
   .nav-menu.active {
     right: 0;
+    padding-top: 1rem; /* Adjust padding for mobile menu */
+    overflow-y: auto; /* Allow scrolling if menu is too tall */
+    max-height: calc(100vh - 80px); /* Ensure menu doesn't overflow viewport */
   }
 
   .nav-toggle {
@@ -948,16 +975,59 @@ footer {
 
   .contact-content {
     grid-template-columns: 1fr;
+    gap: 2rem; /* Reduce gap on mobile */
+  }
+
+  .contact-item {
+    margin-bottom: 1.5rem; /* Add space between contact items */
+  }
+
+  .form-group {
+    margin-bottom: 1rem; /* Reduce space between form fields */
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem; /* Slightly smaller padding for form fields */
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 15% auto;
+    padding: 15px;
+  }
+
+  #modal-title {
+    font-size: 1.2rem;
+  }
+
+  #modal-image {
+    max-height: 60vh;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .hero-text h1 {
-    font-size: 2rem;
+  .container {
+    width: 90%; /* Increase container width on very small screens */
+    padding: 0 10px; /* Add some horizontal padding */
   }
 
-  .hero-text h2 {
-    font-size: 1.2rem;
+  .profile-img,
+  .about-image img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem; /* Smaller heading on very small screens */
   }
 
   .btn {
@@ -967,6 +1037,7 @@ footer {
   .hero-btns {
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
   }
 
   .secondary-btn {
@@ -981,53 +1052,124 @@ footer {
     gap: 2rem;
   }
 
-  .profile-img,
-  .about-image img {
-    width: 250px;
-    height: 250px;
+  .portfolio-filter button,
+  .certification-tabs-list button {
+    padding: 0.4rem 0.8rem; /* Smaller padding for filter buttons */
+    font-size: 0.8rem; /* Smaller font for filter buttons */
+  }
+
+  .footer-content {
+    flex-direction: column; /* Stack footer content on very small screens */
+    gap: 1.5rem; /* Add space between stacked elements */
+    text-align: center; /* Center text */
+  }
+
+  .footer-social {
+    justify-content: center; /* Center social icons */
+  }
+
+  .modal-content {
+    margin: 20% auto;
+    padding: 10px;
+  }
+
+  .close-modal {
+    top: 10px;
+    right: 15px;
+  }
+
+  #modal-title {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    margin-top: 10px;
   }
 }
 
-/* Update section headers */
-.section-header h2 {
-  color: var(--secondary-color);
+/* ===== CONTACT FORM ENHANCEMENTS ===== */
+/* Success Message Styles */
+.success-message {
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.contact {
-  /* background: linear-gradient(135deg, #2c3e50 0%, #3a506b 100%); */
-  background: linear-gradient(310deg, #111e2b 0%, #13a996 100%);
-  color: white;
+.success-icon {
+  color: #4caf50;
+  margin: 0 auto 1rem;
+  font-size: 3rem;
 }
 
-.contact .section-header h2 {
-  color: white;
+.success-message h3 {
+  color: #4caf50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
-.contact .section-line {
-  background: linear-gradient(to right, #fff, var(--accent-color-1));
+.success-message p {
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-/* Update secondary button for better contrast in hero section */
-.hero .secondary-btn {
-  background-color: transparent;
-  border: 2px solid white;
-  color: white;
+/* Error Message Styles */
+.error-message {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: #f44336;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.hero .secondary-btn:hover {
-  background-color: white;
-  color: var(--bg-color-dark);
+/* Button with icon */
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-/* Update highlight color in hero section */
-.hero .highlight {
-  color: var(--accent-color-2);
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+.btn-content i {
+  transition: transform 0.3s ease;
 }
 
-/* Add box shadow to profile images */
-.profile-img,
-.about-image img {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+.btn:hover .btn-content i {
+  transform: translateX(3px);
 }
 
+/* Form message container */
+.form-message {
+  margin-bottom: 1rem;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
